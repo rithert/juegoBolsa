@@ -1,3 +1,5 @@
+import 'package:practica/controller/user_controller.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -349,6 +351,12 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           0.0, 0.0, 0.0, 16.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
+                                          await 
+                                          UserController.autenticar(
+                                              _model
+                                                  .passwordTextController.text,
+                                              _model
+                                                  .passwordTextController.text);
                                           context.pushNamed('playPage');
                                         },
                                         text: 'Ingresar',

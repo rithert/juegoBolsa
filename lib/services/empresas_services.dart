@@ -5,7 +5,7 @@ class EmpresasServices {
   static Future<Map<String, dynamic>> consultarempresasServicios() async {
     try {
       //Construye la URL de la solicitud utilizando UtilHelper.apiUrl y AppConfig.API_DIR
-      Uri uri = Uri.http("api-sumulador.rioenvios.com", "/api/company");
+      Uri uri = Uri.https("api-sumulador.rioenvios.com", "/api/company");
 
       //Realiza una solicitud HTTP POST a la URL construida con los encabezados adecuados
       final response = await http.get(
