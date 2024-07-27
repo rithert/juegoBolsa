@@ -2,7 +2,7 @@ import 'package:practica/models/UserModel.dart';
 import 'package:practica/services/user_services.dart';
 
 class UserController {
-  static Future<dynamic> autenticar(
+  static Future<UserModel?> autenticar(
     String email,
     String pass,
   ) async {
@@ -12,9 +12,8 @@ class UserController {
     if (jsonConsulta.containsKey("token")) {
       UserModel user = UserModel.fromJson(jsonConsulta);
       return user;
-    } else {
-      return jsonConsulta;
     }
+    return null;
   }
 
   static Future<dynamic> crearCuenta(

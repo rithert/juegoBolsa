@@ -1,5 +1,5 @@
-class Noticias {
-  Noticias({
+class NoticiasModel {
+  NoticiasModel({
     required this.id,
     required this.name,
     required this.description,
@@ -18,7 +18,7 @@ class Noticias {
   late final String updatedAt;
   late final String accountId;
 
-  Noticias.fromJson(Map<String, dynamic> json) {
+  NoticiasModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     description = json['description'];

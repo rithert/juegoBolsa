@@ -1,4 +1,6 @@
 import 'package:practica/controller/user_controller.dart';
+import 'package:practica/models/UserModel.dart';
+import 'package:practica/pages/play_page/play_page_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -351,13 +353,24 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                           0.0, 0.0, 0.0, 16.0),
                                       child: FFButtonWidget(
                                         onPressed: () async {
-                                          await 
-                                          UserController.autenticar(
-                                              _model
-                                                  .passwordTextController.text,
-                                              _model
-                                                  .passwordTextController.text);
-                                          context.pushNamed('playPage');
+                                          UserModel? user =
+                                              await UserController.autenticar(
+                                                  _model
+                                                      .emailAddressTextController
+                                                      .text,
+                                                  _model.passwordTextController
+                                                      .text);
+                                          print("user1 ${user}");
+                                          if (user != null) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      PlayPageWidget(
+                                                        user: user,
+                                                      )),
+                                            );
+                                          }
                                         },
                                         text: 'Ingresar',
                                         options: FFButtonOptions(
