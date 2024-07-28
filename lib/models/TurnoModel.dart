@@ -1,15 +1,21 @@
 class TurnoModel {
+  var totalSells;
+
   TurnoModel({
     required this.papersRentFixedId,
     required this.newsPositiveId,
     required this.newsNegativeId,
     required this.round,
+    required this.totalBuy,
+    required this.totalSell,
     required this.companies,
   });
   late final String papersRentFixedId;
   late final String newsPositiveId;
   late final String newsNegativeId;
   late final int round;
+  late final num totalBuy;
+  late final num totalSell;
   late final List<Companies> companies;
 
   TurnoModel.fromJson(Map<String, dynamic> json) {
@@ -17,6 +23,8 @@ class TurnoModel {
     newsPositiveId = json['news_positive_id'];
     newsNegativeId = json['news_negative_id'];
     round = json['round'];
+    totalBuy = json['total_buy'];
+    totalSell = json['total_sell'];
     companies =
         List.from(json['companies']).map((e) => Companies.fromJson(e)).toList();
   }
@@ -27,6 +35,8 @@ class TurnoModel {
     _data['news_positive_id'] = newsPositiveId;
     _data['news_negative_id'] = newsNegativeId;
     _data['round'] = round;
+    _data['total_buy'] = totalBuy;
+    _data['total_sell'] = totalSell;
     _data['companies'] = companies.map((e) => e.toJson()).toList();
     return _data;
   }

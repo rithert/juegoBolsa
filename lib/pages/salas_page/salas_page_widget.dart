@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:practica/controller/salas_controller.dart';
+import 'package:practica/controller/user_controller.dart';
+import 'package:practica/models/BalanceModel.dart';
 import 'package:practica/models/salasModel.dart';
 import 'package:practica/pages/play_page/play_page_widget.dart';
 import 'package:practica/pages/salas_page/salas_page_model.dart';
@@ -51,6 +53,7 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
       isLoading = true;
     });
     listaSalas = await SalasController.consultarSalas();
+
     print("sala ${listaSalas}");
     setState(() {
       listaSalas = listaSalas;
@@ -82,7 +85,7 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
+                      /* Padding(
                         padding: EdgeInsetsDirectional.fromSTEB(0, 0, 0, 10),
                         child: Row(
                           mainAxisSize: MainAxisSize.max,
@@ -105,6 +108,9 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
                             ),
                           ],
                         ),
+                      ), */
+                      SizedBox(
+                        height: 30,
                       ),
                       Padding(
                         padding: EdgeInsets.all(14),
@@ -349,7 +355,7 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
                   ),
                   FFButtonWidget(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => PlayPageWidget(

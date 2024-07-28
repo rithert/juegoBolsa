@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:practica/session/sesion_usuario.dart';
 
 class SalasServices {
   static Future<Map<String, dynamic>> listarSalas() async {
@@ -15,8 +16,7 @@ class SalasServices {
           'Content-Type': "application/json; charset=UTF-8",
           'Accept': '*/*',
           "Access-Control-Allow-Origin": "*",
-          "Authorization":
-              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhY2NvdW50SWQiOiI4ZjQ2YjU4MC0xMzNhLTQ4YTItODM0Yy00MjQ1ZWNmNmQ5YTgiLCJ1c2VySWQiOiJiMDE1NzhhOS1hZWZjLTQ3NjctYjFjNS1kMjUyMTAwY2ZlYTAiLCJwZXJtaXNzaW9uIjoib3duZXIiLCJwcm92aWRlciI6ImFwcCIsImlhdCI6MTcyMTkzMzU1NiwiZXhwIjoxNzIyNTM4MzU2fQ.5M3FdFVJl6-19A7DHSUBKxEowdvpggHn3Utm-iMl5UM"
+          "Authorization": "Bearer ${SesionUsuarioSingleton().token}"
         },
       );
 

@@ -1,9 +1,14 @@
 import 'dart:math';
 
+import 'package:practica/components/dialogo_confirmacion_widget.dart';
 import 'package:practica/controller/empresas_controller.dart';
 import 'package:practica/controller/noticias_controller.dart';
+import 'package:practica/controller/user_controller.dart';
+import 'package:practica/index.dart';
+import 'package:practica/models/BalanceModel.dart';
 import 'package:practica/models/EmpresaModel.dart';
 import 'package:practica/models/NoticiasModel.dart';
+import 'package:practica/models/RondaEndedModel.dart';
 import 'package:practica/models/TurnoModel.dart';
 import 'package:practica/models/UserModel.dart';
 import 'package:practica/models/salasModel.dart';
@@ -47,9 +52,11 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
   List<NoticiasModel> listaNoticias = [];
   List<NoticiasModel> listaNoticiasPositivas = [];
   List<NoticiasModel> listaNoticiasNegativas = [];
+  late BalanceModel balance;
   late NoticiasModel noticiaPositiva;
   late NoticiasModel noticiaNegativa;
   List listaColores = [];
+  int ronda = 1;
   @override
   void initState() {
     super.initState();
@@ -74,6 +81,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
     setState(() {
       isLoading = true;
     });
+    balance = await UserController.getBalance();
     listaEmpresas = await EmpresasController.consultarEmpresas();
     listaNoticias = await NoticiasController.consultarNews();
     listaEmpresasBySala =
@@ -198,6 +206,9 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                     mainAxisSize: MainAxisSize.max,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 20,
+                      ),
                       Padding(
                         padding: const EdgeInsetsDirectional.fromSTEB(
                             0.0, 0.0, 0.0, 10.0),
@@ -210,16 +221,18 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                               color: Color(0xFFF0EB23),
                               size: 40.0,
                             ),
-                            Text(
-                              '10 000',
-                              style: FlutterFlowTheme.of(context)
-                                  .titleMedium
-                                  .override(
-                                    fontFamily: 'Readex Pro',
-                                    fontSize: 30.0,
-                                    letterSpacing: 0.0,
+                            isLoading
+                                ? CircularProgressIndicator()
+                                : Text(
+                                    balance.balanceUser,
+                                    style: FlutterFlowTheme.of(context)
+                                        .titleMedium
+                                        .override(
+                                          fontFamily: 'Readex Pro',
+                                          fontSize: 30.0,
+                                          letterSpacing: 0.0,
+                                        ),
                                   ),
-                            ),
                           ],
                         ),
                       ),
@@ -228,7 +241,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            'Jugador 1',
+                            'Ronda ${ronda}',
                             style: FlutterFlowTheme.of(context)
                                 .titleMedium
                                 .override(
@@ -554,17 +567,6 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                       letterSpacing: 0.0,
                                     ),
                               ),
-                              Text(
-                                'NOTA: Tienes que comprar al menos una.',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Readex Pro',
-                                      color: Colors.white,
-                                      fontSize: 14.0,
-                                      letterSpacing: 0.0,
-                                    ),
-                              ),
                             ],
                           ),
                         ),
@@ -586,7 +588,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
+                                      0.0, 10.0, 0.0, 10.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -688,145 +690,6 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        elevation: 4.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryBackground,
-                                                FlutterFlowTheme.of(context)
-                                                    .alternate
-                                              ],
-                                              stops: [0.0, 1.0],
-                                              begin: const AlignmentDirectional(
-                                                  0.0, -1.0),
-                                              end: const AlignmentDirectional(
-                                                  0, 1.0),
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            border: Border.all(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          child: Opacity(
-                                            opacity: 0.5,
-                                            child: Container(
-                                              width: 100.0,
-                                              child: TextFormField(
-                                                controller:
-                                                    _model.textController5,
-                                                focusNode:
-                                                    _model.textFieldFocusNode5,
-                                                autofocus: true,
-                                                obscureText: false,
-                                                decoration: InputDecoration(
-                                                  labelStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                'Readex Pro',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                  hintText: ' Cantidad',
-                                                  hintStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Readex Pro',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                  enabledBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  errorBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .titleMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                                textAlign: TextAlign.center,
-                                                maxLines: null,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                validator: _model
-                                                    .textController5Validator
-                                                    .asValidator(context),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ],
                             ),
                           ),
@@ -849,7 +712,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                               children: [
                                 Padding(
                                   padding: const EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 10.0, 0.0, 0.0),
+                                      0.0, 10.0, 0.0, 10.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -951,145 +814,6 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                     ],
                                   ),
                                 ),
-                                Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Material(
-                                        color: Colors.transparent,
-                                        elevation: 4.0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(8.0),
-                                        ),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              colors: [
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryBackground,
-                                                FlutterFlowTheme.of(context)
-                                                    .alternate
-                                              ],
-                                              stops: [0.0, 1.0],
-                                              begin: const AlignmentDirectional(
-                                                  0.0, -1.0),
-                                              end: const AlignmentDirectional(
-                                                  0, 1.0),
-                                            ),
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            border: Border.all(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              width: 1.0,
-                                            ),
-                                          ),
-                                          child: Opacity(
-                                            opacity: 0.5,
-                                            child: Container(
-                                              width: 100.0,
-                                              child: TextFormField(
-                                                controller:
-                                                    _model.textController6,
-                                                focusNode:
-                                                    _model.textFieldFocusNode6,
-                                                autofocus: true,
-                                                obscureText: false,
-                                                decoration: InputDecoration(
-                                                  labelStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                'Readex Pro',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                  hintText: ' Cantidad',
-                                                  hintStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Readex Pro',
-                                                            letterSpacing: 0.0,
-                                                          ),
-                                                  enabledBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  focusedBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  errorBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  focusedErrorBorder:
-                                                      UnderlineInputBorder(
-                                                    borderSide:
-                                                        const BorderSide(
-                                                      color: Color(0x00000000),
-                                                      width: 2.0,
-                                                    ),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                ),
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .titleMedium
-                                                    .override(
-                                                      fontFamily: 'Readex Pro',
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primaryText,
-                                                      letterSpacing: 0.0,
-                                                    ),
-                                                textAlign: TextAlign.center,
-                                                maxLines: null,
-                                                keyboardType:
-                                                    TextInputType.number,
-                                                validator: _model
-                                                    .textController6Validator
-                                                    .asValidator(context),
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               ],
                             ),
                           ),
@@ -1098,26 +822,108 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                       FFButtonWidget(
                         onPressed: () async {
                           List<Companies> listaAccionesCompany = [];
-                          for (int i = 0;
-                              i <= listaEmpresasBySala.length;
-                              i++) {
+                          num totalCompra = 0;
+                          num totalVenta = 0;
+
+                          for (int i = 0; i < listaEmpresasBySala.length; i++) {
+                            totalCompra = totalCompra +
+                                double.parse(
+                                        listaEmpresasBySala[i].priceAction) *
+                                    int.parse(
+                                        _textControllersComprar[i].text == ""
+                                            ? "0"
+                                            : _textControllersComprar[i].text);
+                            totalVenta = totalVenta +
+                                double.parse(
+                                        listaEmpresasBySala[i].priceAction) *
+                                    int.parse(
+                                        _textControllersVender[i].text == ""
+                                            ? "0"
+                                            : _textControllersVender[i].text);
                             Companies company = Companies(
                               companyId: listaEmpresasBySala[i].id,
-                              actionsBuy:
-                                  int.parse(_textControllersComprar[i].text),
-                              actionsSell:
-                                  int.parse(_textControllersVender[i].text),
+                              actionsBuy: int.parse(
+                                  _textControllersComprar[i].text == ""
+                                      ? "0"
+                                      : _textControllersComprar[i].text),
+                              actionsSell: int.parse(
+                                  _textControllersVender[i].text == ""
+                                      ? "0"
+                                      : _textControllersVender[i].text),
                             );
+                            print("vacios ${_textControllersVender[2].text}");
+
                             print("compra venta ${company.toJson()}");
                             listaAccionesCompany.add(company);
                           }
+                          print("total compra ${totalCompra}");
+                          print("total venta ${totalVenta}");
 
-                          TurnoModel(
-                              papersRentFixedId: widget.sala!.id,
-                              newsPositiveId: noticiaPositiva.id,
-                              newsNegativeId: noticiaNegativa.id,
-                              round: 1,
-                              companies: listaAccionesCompany);
+                          TurnoModel turno = TurnoModel(
+                            papersRentFixedId: widget.sala!.id,
+                            newsPositiveId: noticiaPositiva.id,
+                            newsNegativeId: noticiaNegativa.id,
+                            round: ronda,
+                            totalBuy: totalCompra,
+                            totalSell: totalVenta,
+                            companies: listaAccionesCompany,
+                          );
+
+                          RondaEndModel? rondaUser =
+                              await UserController.nextTurno(turno);
+
+                          print("ronda ${rondaUser!.toJson()}");
+
+                          for (TextEditingController item
+                              in _textControllersComprar) {
+                            item.clear();
+                          }
+
+                          for (TextEditingController item
+                              in _textControllersVender) {
+                            item.clear();
+                          }
+
+                          BalanceModel balanceTurn =
+                              await UserController.getBalance();
+                          setState(() {
+                            balance = balanceTurn;
+                          });
+                          await showModalBottomSheet(
+                            isScrollControlled: true,
+                            backgroundColor: Colors.transparent,
+                            enableDrag: false,
+                            context: context,
+                            builder: (context) {
+                              return GestureDetector(
+                                onTap: () => _model.unfocusNode.canRequestFocus
+                                    ? FocusScope.of(context)
+                                        .requestFocus(_model.unfocusNode)
+                                    : FocusScope.of(context).unfocus(),
+                                child: Padding(
+                                  padding: MediaQuery.viewInsetsOf(context),
+                                  child: DialogoconfirmacionWidget(
+                                    contenido:
+                                        "Ronda ${rondaUser.round} terminada",
+                                    okPress: () async {
+                                      Navigator.pop(context);
+                                      if (ronda == rondaUser.totalRounds) {
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LeaderBoardPageWidget()),
+                                        );
+                                      }
+                                      setState(() {
+                                        ronda++;
+                                      });
+                                    },
+                                  ),
+                                ),
+                              );
+                            },
+                          ).then((value) => safeSetState(() {}));
                         },
                         text: 'Terminar turno',
                         options: FFButtonOptions(
