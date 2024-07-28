@@ -38,6 +38,10 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<EmpresaModel> listaEmpresas = [];
   List<NoticiasModel> listaNoticias = [];
+  List<NoticiasModel> listaNoticiasPositivas = [];
+  List<NoticiasModel> listaNoticiasNegativas = [];
+  late NoticiasModel noticiaPositiva;
+  late NoticiasModel noticiaNegativa;
   List listaColores = [];
   @override
   void initState() {
@@ -74,13 +78,46 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
     });
     listaEmpresas = await EmpresasController.consultarEmpresas();
     listaNoticias = await NoticiasController.consultarNews();
-    print("lista noticias ${listaNoticias}");
+    listaColores = generateBackgroundColors(listaEmpresas.length);
+    print("hola");
+    print("lista Empresas ${listaEmpresas}");
+    filtrarNoticias();
+
     setState(() {
       listaEmpresas = listaEmpresas;
       isLoading = false;
     });
-    listaColores = generateBackgroundColors(listaEmpresas.length);
   }
+
+  filtrarNoticias() {
+    for (NoticiasModel item in listaNoticias) {
+      if (item.isPositive == 1) {
+        listaNoticiasPositivas.add(item);
+      } else {
+        listaNoticiasNegativas.add(item);
+      }
+    }
+    int _randomNumberP = generateRandomNumber(0, listaNoticiasPositivas.length);
+    int _randomNumberN = generateRandomNumber(0, listaNoticiasNegativas.length);
+    noticiaNegativa = listaNoticiasPositivas[_randomNumberP];
+    noticiaPositiva = listaNoticiasNegativas[_randomNumberN];
+  }
+
+  recalcularCostoAccion() {
+    for (EmpresaModel empresa in listaEmpresas) {
+      if (empresa.id == noticiaPositiva.companyId) {
+        double newPriceAction = double.parse(empresa.priceAction) * 1.2;
+        empresa.priceAction = newPriceAction.toString();
+      }
+    }
+  }
+
+  int generateRandomNumber(int min, int max) {
+    final random = Random();
+    return min + random.nextInt(max - min + 1);
+  }
+
+  seleccionarNoticias() {}
 
   @override
   void dispose() {
@@ -244,7 +281,9 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                         height:
                                             MediaQuery.sizeOf(context).height *
                                                 1.0,
-                                        child: const NoticiaPositivaWidget(),
+                                        child: NoticiaPositivaWidget(
+                                          noticia: noticiaPositiva,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -348,7 +387,9 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                         height:
                                             MediaQuery.sizeOf(context).height *
                                                 1.0,
-                                        child: const NoticiaNegativaWidget(),
+                                        child: NoticiaNegativaWidget(
+                                          noticia: noticiaNegativa,
+                                        ),
                                       ),
                                     ),
                                   );
@@ -438,8 +479,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                           style:
                               FlutterFlowTheme.of(context).bodyMedium.override(
                                     fontFamily: 'Readex Pro',
-                                    color: FlutterFlowTheme.of(context)
-                                        .secondaryBackground,
+                                    color: Colors.white,
                                     fontSize: 20.0,
                                     letterSpacing: 0.0,
                                   ),
@@ -449,8 +489,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                         'Selecciona los que quieras comprar',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               fontFamily: 'Readex Pro',
-                              color: FlutterFlowTheme.of(context)
-                                  .secondaryBackground,
+                              color: Colors.white,
                               fontSize: 14.0,
                               letterSpacing: 0.0,
                             ),
@@ -498,8 +537,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Readex Pro',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                      color: Colors.white,
                                       fontSize: 20.0,
                                       letterSpacing: 0.0,
                                     ),
@@ -510,8 +548,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                     .bodyMedium
                                     .override(
                                       fontFamily: 'Readex Pro',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
+                                      color: Colors.white,
                                       fontSize: 14.0,
                                       letterSpacing: 0.0,
                                     ),

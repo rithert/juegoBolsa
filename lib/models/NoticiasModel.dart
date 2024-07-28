@@ -7,6 +7,7 @@ class NoticiasModel {
     required this.isPositive,
     required this.createdAt,
     required this.updatedAt,
+    required this.companyId,
     required this.accountId,
   });
   late final String id;
@@ -16,6 +17,7 @@ class NoticiasModel {
   late final int isPositive;
   late final String createdAt;
   late final String updatedAt;
+  late final String companyId;
   late final String accountId;
 
   NoticiasModel.fromJson(Map<String, dynamic> json) {
@@ -26,6 +28,7 @@ class NoticiasModel {
     isPositive = json['is_positive'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
+    companyId = json['company_id'];
     accountId = json['account_id'];
   }
 
@@ -38,6 +41,7 @@ class NoticiasModel {
     _data['is_positive'] = isPositive;
     _data['created_at'] = createdAt;
     _data['updated_at'] = updatedAt;
+    _data['company_id'] = companyId;
     _data['account_id'] = accountId;
     return _data;
   }

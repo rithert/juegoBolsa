@@ -1,3 +1,5 @@
+import 'package:practica/models/NoticiasModel.dart';
+
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
@@ -8,7 +10,12 @@ import 'noticia_positiva_model.dart';
 export 'noticia_positiva_model.dart';
 
 class NoticiaPositivaWidget extends StatefulWidget {
-  const NoticiaPositivaWidget({super.key});
+  NoticiaPositivaWidget({
+    super.key,
+    required this.noticia,
+  });
+
+  NoticiasModel noticia;
 
   @override
   State<NoticiaPositivaWidget> createState() => _NoticiaPositivaWidgetState();
@@ -43,8 +50,7 @@ class _NoticiaPositivaWidgetState extends State<NoticiaPositivaWidget> {
     return Padding(
       padding: EdgeInsets.all(40.0),
       child: Container(
-        width: double.infinity,
-        height: MediaQuery.sizeOf(context).height * 0.8,
+        height: MediaQuery.sizeOf(context).height * 0.2,
         decoration: BoxDecoration(
           color: FlutterFlowTheme.of(context).secondaryBackground,
           boxShadow: [
@@ -67,9 +73,9 @@ class _NoticiaPositivaWidgetState extends State<NoticiaPositivaWidget> {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.network(
-                  'https://images.unsplash.com/photo-1569074187119-c87815b476da?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjZ8fHNwb3J0c3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60',
+                  widget.noticia.urlImage,
                   width: double.infinity,
-                  height: 100.0,
+                  height: 200.0,
                   fit: BoxFit.cover,
                 ),
               ),
@@ -79,7 +85,7 @@ class _NoticiaPositivaWidgetState extends State<NoticiaPositivaWidget> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Text(
-                      'NOTICIA POSITIVA',
+                      widget.noticia.name,
                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                             fontFamily: 'Readex Pro',
                             letterSpacing: 0.0,
@@ -93,7 +99,7 @@ class _NoticiaPositivaWidgetState extends State<NoticiaPositivaWidget> {
                 children: [
                   Expanded(
                     child: Text(
-                      'I’ll be working on a few different proposals, let me know when you’ve got time to go over them before the weekend.',
+                      widget.noticia.description,
                       style: FlutterFlowTheme.of(context).labelMedium.override(
                             fontFamily: 'Readex Pro',
                             letterSpacing: 0.0,
