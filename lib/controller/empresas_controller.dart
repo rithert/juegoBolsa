@@ -15,4 +15,18 @@ class EmpresasController {
 
     return listCompany;
   }
+
+  static Future<List<EmpresaModel>> consultarEmpresasBySala(
+      String idSala) async {
+    Map<String, dynamic> jsonConsulta =
+        await EmpresasServices.consultarEmpresasBySalaServices(idSala);
+
+    List<dynamic> listaEmpresas = jsonConsulta['data'];
+
+    List<EmpresaModel> listCompany = listaEmpresas
+        .map((jsonObject) => EmpresaModel.fromJson(jsonObject))
+        .toList();
+
+    return listCompany;
+  }
 }

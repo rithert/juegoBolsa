@@ -1,6 +1,7 @@
 import 'package:practica/controller/user_controller.dart';
 import 'package:practica/models/UserModel.dart';
 import 'package:practica/pages/play_page/play_page_widget.dart';
+import 'package:practica/pages/salas_page/salas_page_widget.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -366,9 +367,10 @@ class _LoginPageWidgetState extends State<LoginPageWidget> {
                                               context,
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      PlayPageWidget(
+                                                      /* PlayPageWidget(
                                                         user: user,
-                                                      )),
+                                                      ) */
+                                                      SalaPagesWidget()),
                                             );
                                           }
                                         },

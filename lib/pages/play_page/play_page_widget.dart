@@ -5,6 +5,7 @@ import 'package:practica/controller/noticias_controller.dart';
 import 'package:practica/models/EmpresaModel.dart';
 import 'package:practica/models/NoticiasModel.dart';
 import 'package:practica/models/UserModel.dart';
+import 'package:practica/models/salasModel.dart';
 
 import '/components/noticia_negativa_widget.dart';
 import '/components/noticia_positiva_widget.dart';
@@ -24,9 +25,11 @@ class PlayPageWidget extends StatefulWidget {
   PlayPageWidget({
     super.key,
     this.user,
+    this.sala,
   });
 
   UserModel? user;
+  SalasModel? sala;
   @override
   State<PlayPageWidget> createState() => _PlayPageWidgetState();
 }
@@ -37,6 +40,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   List<EmpresaModel> listaEmpresas = [];
+  List<EmpresaModel> listaEmpresasBySala = [];
   List<NoticiasModel> listaNoticias = [];
   List<NoticiasModel> listaNoticiasPositivas = [];
   List<NoticiasModel> listaNoticiasNegativas = [];
@@ -78,15 +82,19 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
     });
     listaEmpresas = await EmpresasController.consultarEmpresas();
     listaNoticias = await NoticiasController.consultarNews();
+    listaEmpresasBySala =
+        await EmpresasController.consultarEmpresasBySala(widget.sala!.id);
     listaColores = generateBackgroundColors(listaEmpresas.length);
-    print("hola");
-    print("lista Empresas ${listaEmpresas}");
+
     filtrarNoticias();
 
     setState(() {
-      listaEmpresas = listaEmpresas;
+      //listaEmpresas = listaEmpresas;
+      listaEmpresas = listaEmpresasBySala;
       isLoading = false;
     });
+    print("sala desde play ${widget.sala!.toJson()}");
+    print("empresaBysala desde play ${listaEmpresasBySala[0].toJson()}");
   }
 
   filtrarNoticias() {
