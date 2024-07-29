@@ -22,7 +22,7 @@ class SalasModel {
   late final String createdAt;
   late final String updatedAt;
   late final String accountId;
-  late final String numberCompetitors;
+  late final num numberCompetitors;
 
   SalasModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -51,6 +51,7 @@ class SalasModel {
     _data['updated_at'] = updatedAt;
     _data['account_id'] = accountId;
     _data['number_of_competitors'] = numberCompetitors;
+
     return _data;
   }
 }
