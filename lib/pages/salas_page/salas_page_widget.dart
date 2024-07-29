@@ -262,14 +262,16 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
                             borderRadius: BorderRadius.circular(8),
                             child: Image.network(
                               sala.urlImage,
-                              width: 50,
-                              height: 30,
+                              width: kIsWeb ? 100 : 50,
+                              height: kIsWeb ? 100 : 50,
                               fit: BoxFit.cover,
                             ),
                           ),
                         ),
                         SizedBox(
-                          width: kIsWeb ? null : 125,
+                          width: kIsWeb
+                              ? MediaQuery.sizeOf(context).width * 0.3
+                              : 125,
                           child: Column(
                             mainAxisSize: MainAxisSize.max,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -283,11 +285,12 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
                                       letterSpacing: 0,
+                                      fontSize: kIsWeb ? 28 : 12,
                                       fontWeight: FontWeight.w600,
                                     ),
                                 textAlign: TextAlign.left,
                               ),
-                              Text(
+                              /* Text(
                                 sala.paper,
                                 style: FlutterFlowTheme.of(context)
                                     .bodyMedium
@@ -295,56 +298,54 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
                                       fontFamily: 'Readex Pro',
                                       color: FlutterFlowTheme.of(context)
                                           .primaryText,
-                                      fontSize: 12,
+                                      fontSize: kIsWeb ? 20 : 12,
                                       letterSpacing: 0,
                                     ),
                                 textAlign: TextAlign.left,
-                              ),
+                              ), */
                             ],
                           ),
                         ),
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(10, 0, 0, 0),
-                          child: Expanded(
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  'Valor unitario: \$ ${sala.unitValue}',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: Color(0xFF4B39EF),
-                                        fontSize: 10,
-                                        letterSpacing: 0,
-                                      ),
-                                ),
-                                Text(
-                                  'Interes: ${sala.interest}',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: Color(0xFF4B39EF),
-                                        fontSize: 10,
-                                        letterSpacing: 0,
-                                      ),
-                                ),
-                                Text(
-                                  'Plazo/Vigencia: 1/2',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        fontFamily: 'Readex Pro',
-                                        color: Color(0xFF4B39EF),
-                                        fontSize: 10,
-                                        letterSpacing: 0,
-                                      ),
-                                ),
-                              ],
-                            ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Valor unitario: \$ ${sala.unitValue}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Color(0xFF4B39EF),
+                                      fontSize: kIsWeb ? 20 : 10,
+                                      letterSpacing: 0,
+                                    ),
+                              ),
+                              Text(
+                                'Interes: ${sala.interest}',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Color(0xFF4B39EF),
+                                      fontSize: kIsWeb ? 20 : 10,
+                                      letterSpacing: 0,
+                                    ),
+                              ),
+                              Text(
+                                'Plazo/Vigencia: 1/2',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: 'Readex Pro',
+                                      color: Color(0xFF4B39EF),
+                                      fontSize: kIsWeb ? 20 : 10,
+                                      letterSpacing: 0,
+                                    ),
+                              ),
+                            ],
                           ),
                         ),
                       ],

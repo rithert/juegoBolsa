@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:practica/components/dialogo_confirmacion_widget.dart';
 import 'package:practica/controller/empresas_controller.dart';
 import 'package:practica/controller/noticias_controller.dart';
@@ -113,15 +114,18 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
     }
     int _randomNumberP = generateRandomNumber(0, listaNoticiasPositivas.length);
     int _randomNumberN = generateRandomNumber(0, listaNoticiasNegativas.length);
-    noticiaNegativa = listaNoticiasPositivas[_randomNumberP];
-    noticiaPositiva = listaNoticiasNegativas[_randomNumberN];
+    noticiaPositiva = listaNoticiasPositivas[_randomNumberP];
+    noticiaNegativa = listaNoticiasNegativas[_randomNumberN];
   }
 
   recalcularCostoAccion() {
     for (EmpresaModel empresa in listaEmpresas) {
       if (empresa.id == noticiaPositiva.companyId) {
         double newPriceAction = double.parse(empresa.priceAction) * 1.2;
-        empresa.priceAction = newPriceAction.toString();
+        setState(() {
+          empresa.priceAction = newPriceAction.toString();
+          listaEmpresas;
+        });
       }
     }
   }
@@ -891,6 +895,12 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                               await EmpresasController.consultarEmpresasBySala(
                                   widget.sala!.id);
 
+                          setState(() {
+                            listaEmpresas = listaEmpresaTurn;
+                          });
+
+                          recalcularCostoAccion();
+
                           await showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
@@ -986,8 +996,8 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                     borderRadius: BorderRadius.circular(8.0),
                     child: Image.network(
                       empresa.urlImage,
-                      width: 40.0,
-                      height: 30.0,
+                      width: kIsWeb ? 100 : 50,
+                      height: kIsWeb ? 100 : 50,
                       fit: BoxFit.cover,
                     ),
                   ),

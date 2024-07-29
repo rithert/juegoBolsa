@@ -13,7 +13,7 @@ class EmpresaModel {
   });
   late final String id;
   late final String name;
-  late final String priceAction;
+  late String priceAction;
   late final int totalActions;
   late final int availableActions;
   late final String urlImage;
