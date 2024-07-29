@@ -145,8 +145,7 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
                                       .bodyMedium
                                       .override(
                                         fontFamily: 'Readex Pro',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryBackground,
+                                        color: Colors.white,
                                         fontSize: 20,
                                         letterSpacing: 0,
                                       ),
@@ -166,9 +165,7 @@ class _SalaPagesWidgetState extends State<SalaPagesWidget> {
                                             .bodyMedium
                                             .override(
                                               fontFamily: 'Readex Pro',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
+                                              color: Colors.white,
                                               fontSize: 20,
                                               letterSpacing: 0,
                                             ),

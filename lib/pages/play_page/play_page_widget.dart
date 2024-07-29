@@ -886,9 +886,11 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
 
                           BalanceModel balanceTurn =
                               await UserController.getBalance();
-                          setState(() {
-                            balance = balanceTurn;
-                          });
+
+                          List<EmpresaModel> listaEmpresaTurn =
+                              await EmpresasController.consultarEmpresasBySala(
+                                  widget.sala!.id);
+
                           await showModalBottomSheet(
                             isScrollControlled: true,
                             backgroundColor: Colors.transparent,
@@ -917,6 +919,8 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                       }
                                       setState(() {
                                         ronda++;
+                                        balance = balanceTurn;
+                                        listaEmpresas = listaEmpresaTurn;
                                       });
                                     },
                                   ),

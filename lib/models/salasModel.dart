@@ -10,6 +10,7 @@ class SalasModel {
     required this.createdAt,
     required this.updatedAt,
     required this.accountId,
+    required this.numberCompetitors,
   });
   late final String id;
   late final String transmitter;
@@ -21,6 +22,7 @@ class SalasModel {
   late final String createdAt;
   late final String updatedAt;
   late final String accountId;
+  late final String numberCompetitors;
 
   SalasModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -33,6 +35,7 @@ class SalasModel {
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
     accountId = json['account_id'];
+    numberCompetitors = json['number_of_competitors'];
   }
 
   Map<String, dynamic> toJson() {
@@ -47,6 +50,7 @@ class SalasModel {
     _data['created_at'] = createdAt;
     _data['updated_at'] = updatedAt;
     _data['account_id'] = accountId;
+    _data['number_of_competitors'] = numberCompetitors;
     return _data;
   }
 }
