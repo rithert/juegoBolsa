@@ -58,9 +58,9 @@ class _DialogoconfirmacionWidgetState extends State<DialogoconfirmacionWidget> {
             padding: const EdgeInsets.all(10.0),
             child: Container(
               width: kIsWeb
-                  ? MediaQuery.of(context).size.width * 0.3
+                  ? MediaQuery.of(context).size.width * 0.7
                   : double.infinity,
-              height: 210.0,
+              height: 400.0,
               decoration: BoxDecoration(
                 color: FlutterFlowTheme.of(context).secondaryBackground,
                 borderRadius: BorderRadius.circular(20.0),

@@ -1,5 +1,6 @@
 import 'package:practica/models/BalanceModel.dart';
 import 'package:practica/models/RondaEndedModel.dart';
+import 'package:practica/models/ScoresModel.dart';
 import 'package:practica/models/TurnoModel.dart';
 import 'package:practica/models/UserModel.dart';
 import 'package:practica/services/user_services.dart';
@@ -56,5 +57,14 @@ class UserController {
     BalanceModel balance = BalanceModel.fromJson(jsonConsulta);
 
     return balance;
+  }
+
+  static Future<ScoresModel> getScores(String id) async {
+    Map<String, dynamic> jsonConsulta =
+        await UserService.getGanadoresServices(id);
+
+    ScoresModel scores = ScoresModel.fromJson(jsonConsulta["data"]);
+
+    return scores;
   }
 }
