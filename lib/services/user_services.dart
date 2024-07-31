@@ -108,7 +108,7 @@ class UserService {
 
       if (response.statusCode == 200) {
         //Decodifica y devulve el cuerpo de la respuesta si el código de estado es 200
-        print("data ${jsonDecode(utf8.decode(response.bodyBytes))}");
+        print("data12 ${jsonDecode(utf8.decode(response.bodyBytes))}");
         return jsonDecode(utf8.decode(response.bodyBytes));
       } else if (response.statusCode == 408) {
         //Devulve un mensaje de error si el código de estado es 408 (timeout)

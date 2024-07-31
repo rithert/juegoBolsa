@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:practica/components/dialogoconfirmacion_model.dart';
+import 'package:practica/models/RondaEndedModel.dart';
 
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -7,13 +8,11 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 
 class DialogoconfirmacionWidget extends StatefulWidget {
-  const DialogoconfirmacionWidget({
-    super.key,
-    required this.contenido,
-    this.okPress,
-  });
+  const DialogoconfirmacionWidget(
+      {super.key, required this.contenido, this.okPress, this.listaBolsa});
   final String contenido;
   final VoidCallback? okPress;
+  final List<VariationPricesPlay>? listaBolsa;
 
   @override
   State<DialogoconfirmacionWidget> createState() =>
@@ -104,13 +103,36 @@ class _DialogoconfirmacionWidgetState extends State<DialogoconfirmacionWidget> {
                     ),
                     Container(
                       width: double.infinity,
-                      height: 150.0,
+                      height: 250.0,
                       decoration: const BoxDecoration(),
                       child: Align(
                         alignment: const AlignmentDirectional(0.0, -1.0),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           children: [
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Expanded(
+                              child: ListView.separated(
+                                itemCount: widget.listaBolsa!.length,
+                                itemBuilder: (context, index) {
+                                  final bolsa = widget.listaBolsa![index];
+
+                                  return ItemBolsa(context, bolsa);
+                                },
+                                separatorBuilder: (context, index) {
+                                  return Opacity(
+                                    opacity: 0.5,
+                                    child: Divider(
+                                      thickness: 1.0,
+                                      color: FlutterFlowTheme.of(context)
+                                          .primaryText,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
                             Padding(
                               padding: const EdgeInsetsDirectional.fromSTEB(
                                   0.0, 30.0, 0.0, 30.0),
@@ -172,6 +194,33 @@ class _DialogoconfirmacionWidgetState extends State<DialogoconfirmacionWidget> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget ItemBolsa(
+    BuildContext context,
+    VariationPricesPlay bolsa,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        bolsa.variation == "up"
+            ? Icon(
+                Icons.trending_up_sharp,
+                color: Colors.green,
+              )
+            : bolsa.variation == "equal"
+                ? Icon(
+                    Icons.broken_image,
+                    color: Colors.blue,
+                  )
+                : Icon(
+                    Icons.trending_down_rounded,
+                    color: Colors.red,
+                  ),
+        Text(bolsa.name),
+        Text(bolsa.priceAction),
+      ],
     );
   }
 }

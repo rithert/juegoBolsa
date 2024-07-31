@@ -1173,6 +1173,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                             totalSell: totalVenta,
                             companies: listaAccionesCompany,
                           );
+                          print("turno ${turno.toJson()}");
 
                           RondaEndModel? rondaUser =
                               await UserController.nextTurno(turno);
@@ -1216,6 +1217,7 @@ class _PlayPageWidgetState extends State<PlayPageWidget> {
                                 child: Padding(
                                   padding: MediaQuery.viewInsetsOf(context),
                                   child: DialogoconfirmacionWidget(
+                                    listaBolsa: rondaUser.variationPricesPlay,
                                     contenido:
                                         "Ronda ${rondaUser.round} terminada",
                                     okPress: () async {

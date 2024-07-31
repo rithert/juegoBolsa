@@ -15,7 +15,7 @@ class RondaEndModel {
   late final int userBalance;
   late final int playerRound;
   late final int totalRounds;
-  late final String userId;
+  late final String? userId;
   late final List<VariationPricesPlay> variationPricesPlay;
 
   RondaEndModel.fromJson(Map<String, dynamic> json) {
@@ -58,6 +58,7 @@ class VariationPricesPlay {
     required this.updatedAt,
     required this.papersRentFixedId,
     required this.accountId,
+    required this.variation,
   });
   late final String id;
   late final String name;
@@ -69,6 +70,7 @@ class VariationPricesPlay {
   late final String updatedAt;
   late final String papersRentFixedId;
   late final String accountId;
+  late final String variation;
 
   VariationPricesPlay.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -81,6 +83,7 @@ class VariationPricesPlay {
     updatedAt = json['updated_at'];
     papersRentFixedId = json['papers_rent_fixed_id'];
     accountId = json['account_id'];
+    variation = json['variation'];
   }
 
   Map<String, dynamic> toJson() {
@@ -95,6 +98,7 @@ class VariationPricesPlay {
     _data['updated_at'] = updatedAt;
     _data['papers_rent_fixed_id'] = papersRentFixedId;
     _data['account_id'] = accountId;
+    _data['variation'] = variation;
     return _data;
   }
 }
